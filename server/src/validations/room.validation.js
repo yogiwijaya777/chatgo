@@ -31,4 +31,5 @@ const updateRoom = {
 module.exports = {
   createRoom,
   getRoom,
+  updateRoom,
 };

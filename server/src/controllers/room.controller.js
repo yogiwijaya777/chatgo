@@ -45,20 +45,20 @@ const updateRoom = catchAsync(async (req, res) => {
   });
 });
 
-// const deleteRoom = catchAsync(async (req, res) => {
-//   await roomService.deleteRoomById(req.params.roomId);
+const deleteRoom = catchAsync(async (req, res) => {
+  await roomService.deleteRoomById(req.params.roomId);
 
-//   res.status(httpStatus.OK).send({
-//     status: httpStatus.OK,
-//     message: 'Delete Room Success',
-//     data: null,
-//   });
-// });
+  res.status(httpStatus.OK).send({
+    status: httpStatus.OK,
+    message: 'Delete Room Success',
+    data: null,
+  });
+});
 
 module.exports = {
   createRoom,
   getRooms,
   getRoom,
   updateRoom,
-  // deleteRoom,
+  deleteRoom,
 };
