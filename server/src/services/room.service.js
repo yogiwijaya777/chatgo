@@ -23,7 +23,20 @@ const createRoom = async (room) => {
  * @returns {Promise<Room[]>}
  */
 const getRooms = async () => {
-  const rooms = await prisma.room.findMany();
+  const { name } = filter;
+  const { take, skip, sort: orderBy } = options;
+
+  const rooms = await prisma.room.findMany({
+    where: {
+      name: {
+        contains: name,
+      },
+    },
+    include: { products: true },
+    orderBy,
+    take: Number(take),
+    skip,
+  });
 
   if (!rooms) {
     throw new ApiError(httpStatus.NOT_FOUND, 'No rooms found');
