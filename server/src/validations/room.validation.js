@@ -28,8 +28,15 @@ const updateRoom = {
     .min(1),
 };
 
+const deleteRoom = {
+  params: Joi.object().keys({
+    roomId: Joi.string().custom(objectId).required(),
+  }),
+};
+
 module.exports = {
   createRoom,
   getRoom,
   updateRoom,
+  deleteRoom,
 };
