@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=inirahasia
+    networks:
+      - cg-network
+    ports:
+      - "5432:5432"
+
+  server:
+    build:
+      context: ./server
+      target: dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/src:/app/src
+    env_file:
+      - ./server/.env
+    environment:
+      - DB_URL=postgres://postgres:inirahasia@postgres:5432/postgres
+    container_name: server
+    restart: always
+    networks:
+      - cg-network
+      - next-express
+    depends_on:
+      - postgres
+
+networks:
+  cg-network:
+  next-express:
+volumes:
+  db-data:
