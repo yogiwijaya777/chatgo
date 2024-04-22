@@ -11,28 +11,30 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String
-  email     String?    @unique
-  password  String    
-  role      String    @default("user")
-  createdAt DateTime  @default(now())
-  updateAt  DateTime  @default(now())
-  isEmailVerified Boolean @default(false)
-  tokens    Token[]
-  rooms     Room[]
-  messages  Message[]
+  id              String    @id @default(uuid())
+  name            String
+  email           String?   @unique
+  password        String
+  role            String    @default("user")
+  createdAt       DateTime  @default(now())
+  updateAt        DateTime  @default(now())
+  isEmailVerified Boolean   @default(false)
+  tokens          Token[]
+  roomsAsUser1    Room[]    @relation("user1Relation")
+  roomsAsUser2    Room[]    @relation("user2Relation")
+  messages        Message[]
 }
+
 model Token {
-  id        String    @id @default(uuid())
-  token     String    @db.VarChar(400)
-  userId    String    
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type      String
-  expires   DateTime
-  blacklisted Boolean @default(false)
-  createdAt DateTime  @default(now())
-  updateAt  DateTime  @default(now())
+  id          String   @id @default(uuid())
+  token       String   @db.VarChar(400)
+  userId      String
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String
+  expires     DateTime
+  blacklisted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @default(now())
 }
 
 model Room {
@@ -40,17 +42,19 @@ model Room {
   name      String
   createdAt DateTime  @default(now())
   userId    String
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId2   String
+  user1     User      @relation("user1Relation", fields: [userId], references: [id], onDelete: Cascade)
+  user2     User      @relation("user2Relation", fields: [userId2], references: [id], onDelete: Cascade)
   messages  Message[]
 }
 
 model Message {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   text      String
-  createdAt DateTime  @default(now())
-  updateAt  DateTime  @default(now())
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
   userId    String
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   roomId    String
-  Room      Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  Room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
 }
