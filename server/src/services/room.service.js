@@ -11,9 +11,6 @@ const createRoom = async (room) => {
   const roomDoc = await prisma.room.create({
     data: room,
   });
-  console.log(roomDoc);
-  console.log(roomDoc);
-  console.log(roomDoc);
 
   return roomDoc;
 };
