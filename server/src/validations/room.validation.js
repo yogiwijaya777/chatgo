@@ -9,6 +9,13 @@ const createRoom = {
   }),
 };
 
+const getRoom = {
+  params: Joi.object().keys({
+    roomId: Joi.string().custom(objectId).required(),
+  }),
+};
+
 module.exports = {
   createRoom,
+  getRoom,
 };
