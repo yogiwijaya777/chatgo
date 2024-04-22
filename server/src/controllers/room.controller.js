@@ -35,15 +35,15 @@ const getRoom = catchAsync(async (req, res) => {
   });
 });
 
-// const updateRoom = catchAsync(async (req, res) => {
-//   const room = await roomService.updateRoomById(req.params.roomId, req.body);
+const updateRoom = catchAsync(async (req, res) => {
+  const room = await roomService.updateRoomById(req.params.roomId, req.body);
 
-//   res.status(httpStatus.OK).send({
-//     status: httpStatus.OK,
-//     message: 'Update Room Success',
-//     data: room,
-//   });
-// });
+  res.status(httpStatus.OK).send({
+    status: httpStatus.OK,
+    message: 'Update Room Success',
+    data: room,
+  });
+});
 
 // const deleteRoom = catchAsync(async (req, res) => {
 //   await roomService.deleteRoomById(req.params.roomId);
@@ -59,6 +59,6 @@ module.exports = {
   createRoom,
   getRooms,
   getRoom,
-  // updateRoom,
+  updateRoom,
   // deleteRoom,
 };

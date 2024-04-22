@@ -11,7 +11,10 @@ router
   .post(auth(), validate(roomValidation.createRoom), roomController.createRoom)
   .get(auth('getRooms'), roomController.getRooms);
 
-router.route('/:roomId').get(auth(), validate(roomValidation.getRoom), roomController.getRoom);
+router
+  .route('/:roomId')
+  .get(auth(), validate(roomValidation.getRoom), roomController.getRoom)
+  .post(auth('manageRooms'), validate(roomValidation.updateRoom), roomController.updateRoom);
 
 module.exports = router;
 
