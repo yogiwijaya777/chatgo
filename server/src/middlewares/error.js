@@ -17,6 +17,7 @@ const errorConverter = (err, req, res, next) => {
     } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
       // Handling Prisma Error
       logger.info('handlePrismaError');
+      // eslint-disable-next-line no-use-before-define
       error = handlePrismaError(err);
     } else {
       // Handling Global Error
