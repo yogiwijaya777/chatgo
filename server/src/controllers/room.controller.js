@@ -1,26 +1,26 @@
 const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
+const { roomService } = require('../services');
 
 const createRoom = catchAsync(async (req, res) => {
   const room = await roomService.createRoom(req.body);
 
   res.status(httpStatus.CREATED).send({
-    status: httpStatus.CREATED,
+    sucess: true,
     message: 'Create Room Success',
     data: room,
   });
 });
 
-// const getrooms = catchAsync(async (req, res) => {
-//   const result = await roomService.queryrooms();
+const getRooms = catchAsync(async (req, res) => {
+  const result = await roomService.getRooms();
 
-//   res.status(httpStatus.OK).send({
-//     status: httpStatus.OK,
-//     message: 'Get rooms Success',
-//     data: result,
-//   });
-// });
+  res.status(httpStatus.OK).send({
+    status: httpStatus.OK,
+    message: 'Get rooms Success',
+    data: result,
+  });
+});
 
 // const getRoom = catchAsync(async (req, res) => {
 //   const room = await roomService.getRoomById(req.params.roomId);
@@ -54,3 +54,11 @@ const createRoom = catchAsync(async (req, res) => {
 //     data: null,
 //   });
 // });
+
+module.exports = {
+  createRoom,
+  getRooms,
+  // getRoom,
+  // updateRoom,
+  // deleteRoom,
+};

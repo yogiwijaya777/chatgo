@@ -9,10 +9,12 @@ const ApiError = require('../utils/ApiError');
  */
 const createRoom = async (room) => {
   const roomDoc = await prisma.room.create({
-    data: {
-      ...room,
-    },
+    data: room,
   });
+  console.log(roomDoc);
+  console.log(roomDoc);
+  console.log(roomDoc);
+
   return roomDoc;
 };
 
