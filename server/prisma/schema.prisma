@@ -20,6 +20,8 @@ model User {
   updateAt  DateTime  @default(now())
   isEmailVerified Boolean @default(false)
   tokens    Token[]
+  rooms     Room[]
+  messages  Message[]
 }
 model Token {
   id        String    @id @default(uuid())
@@ -31,4 +33,24 @@ model Token {
   blacklisted Boolean @default(false)
   createdAt DateTime  @default(now())
   updateAt  DateTime  @default(now())
+}
+
+model Room {
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime  @default(now())
+  userId    String
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
+}
+
+model Message {
+  id        String    @id @default(uuid())
+  text      String
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @default(now())
+  userId    String
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roomId    String
+  Room      Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
 }
