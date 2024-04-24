@@ -1,9 +1,8 @@
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import Link from "next/link";
-import { Input } from "@/components/ui/input";
+import MessageAvatar from "@/components/MessageAvatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import MessageAvatar from "@/components/MessageAvatar";
-import MessageAvatar from "@/components/MessageAvatar";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export default function Chat() {
   return (
