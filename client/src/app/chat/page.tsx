@@ -1,4 +1,4 @@
-import MessageContainer from "@/components/MessageContainer";
+import MessageContainer from "@/components/messages/MessageContainer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 
