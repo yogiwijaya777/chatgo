@@ -2,12 +2,29 @@ const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 const prisma = require('../prisma/client');
+const http = require('http');
+const { Server } = require('socket.io');
 
-let server;
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
 
 if (prisma) {
   logger.info('Connected to Database');
-  server = app.listen(config.port, () => {
+  server.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
     console.log(`Docs📚: http://localhost:${config.port}/v1/docs`);
   });
