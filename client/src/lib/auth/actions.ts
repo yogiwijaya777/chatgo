@@ -1,8 +1,8 @@
 "use server";
+import { type AuthResponse } from "@/types";
 import { cookies } from "next/headers";
-import { type SingupInput, signupSchema } from "../validators/auth";
 import { redirect } from "next/navigation";
-import { type AuthResponse, type AuthResponse } from "@/types";
+import { signupSchema, type SingupInput } from "../validators/auth";
 
 export interface ActionResponse<T> {
   fieldError?: Partial<Record<keyof T, string | undefined>>;
