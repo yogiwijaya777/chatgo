@@ -18,11 +18,7 @@ const MessageContainer = () => {
   return (
     <div className="flex flex-1 flex-col">
       {!selectedConversation ? (
-        <>
-          <MessageAvatar />
-          <Message />
-          <MessageInput />
-        </>
+        <NoChatSelected />
       ) : (
         <>
           <MessageAvatar />
