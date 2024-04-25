@@ -38,7 +38,7 @@ export interface UserCreatedResponse {
 }
 
 export interface AuthResponse {
-  userCreated: {
+  user: {
     id: string;
     name: string;
     email: string;

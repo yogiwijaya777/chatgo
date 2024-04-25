@@ -52,7 +52,7 @@ export async function signup(
       secure: process.env.NODE_ENV === "production",
     });
 
-    cookies().set("user", JSON.stringify(data.userCreated), {
+    cookies().set("user", JSON.stringify(data.user), {
       httpOnly: process.env.NODE_ENV === "production",
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
