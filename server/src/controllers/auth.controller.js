@@ -10,11 +10,11 @@ const register = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
-  const userCreated = await userService.createUser(req.body);
-  const tokens = await tokenService.generateAuthTokens(userCreated);
+  const user = await userService.createUser(req.body);
+  const tokens = await tokenService.generateAuthTokens(user);
 
-  delete userCreated.password;
-  res.status(httpStatus.CREATED).send({ userCreated, tokens });
+  delete user.password;
+  res.status(httpStatus.CREATED).send({ user, tokens });
 });
 
 const login = catchAsync(async (req, res) => {

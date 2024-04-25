@@ -2,7 +2,7 @@
 import { type AuthResponse } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { type LoginInput, signupSchema, type SingupInput } from "../validators/auth";
+import { loginSchema, signupSchema, type LoginInput, type SingupInput } from "../validators/auth";
 
 export interface ActionResponse<T> {
   fieldError?: Partial<Record<keyof T, string | undefined>>;
@@ -71,7 +71,7 @@ export async function login(
 ): Promise<ActionResponse<LoginInput>> {
   const obj = Object.fromEntries(formData.entries());
 
-  const parsed = signupSchema.safeParse(obj);
+  const parsed = loginSchema.safeParse(obj);
   if (!parsed.success) {
     const err = parsed.error.flatten();
     return {
@@ -107,7 +107,7 @@ export async function login(
       secure: process.env.NODE_ENV === "production",
     });
 
-    cookies().set("user", JSON.stringify(data.userCreated), {
+    cookies().set("user", JSON.stringify(data.user), {
       httpOnly: process.env.NODE_ENV === "production",
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
