@@ -13,3 +13,26 @@ export interface ConversationState {
   messages: Message[];
   setMessages: (messages: Message[]) => void;
 }
+
+export interface UserCreatedResponse {
+  userCreated: {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+    createdAt: string;
+    updateAt: string;
+    isEmailVerified: boolean;
+  };
+  tokens: {
+    access: {
+      token: string;
+      expires: string;
+    };
+    refresh: {
+      token: string;
+      expires: string;
+    };
+  };
+}
