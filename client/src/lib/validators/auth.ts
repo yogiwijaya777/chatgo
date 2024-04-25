@@ -6,4 +6,10 @@ export const signupSchema = z.object({
   password: z.string().min(8),
 });
 
+export const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
 export type SingupInput = z.infer<typeof signupSchema>;
+export type LoginInput = z.infer<typeof loginSchema>;
