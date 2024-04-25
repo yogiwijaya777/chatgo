@@ -58,3 +58,24 @@ export interface AuthResponse {
     };
   };
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updateAt: string;
+  isEmailVerified: boolean;
+}
+
+export interface Tokens {
+  access: {
+    token: string;
+    expires: string;
+  };
+  refresh: {
+    token: string;
+    expires: string;
+  };
+}

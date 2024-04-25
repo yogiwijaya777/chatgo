@@ -1,13 +1,17 @@
 import Conversations from "./Conversations";
+import Logout from "./Logout";
 
 const SideBar = () => {
   return (
-    <div className="flex w-64 flex-col border-r border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
+    <div className="relative flex w-64 flex-col border-r border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
       <div className="flex h-14 items-center border-b border-gray-200 px-4 dark:border-gray-700">
         <TextIcon className="mr-2 h-6 w-6 text-gray-500 dark:text-gray-400" />
         <span className="font-semibold text-gray-900 dark:text-gray-50">Chats</span>
       </div>
       <Conversations />
+      <div className="absolute bottom-0 left-16 border-t border-gray-200 p-4 dark:border-gray-700">
+        <Logout />
+      </div>
     </div>
   );
 };

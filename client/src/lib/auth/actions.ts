@@ -1,8 +1,14 @@
 "use server";
-import { type AuthResponse } from "@/types";
+import { type AuthResponse, type User, type Tokens } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { loginSchema, signupSchema, type LoginInput, type SingupInput } from "../validators/auth";
+import {
+  type LogoutInput,
+  loginSchema,
+  signupSchema,
+  type LoginInput,
+  type SingupInput,
+} from "../validators/auth";
 
 export interface ActionResponse<T> {
   fieldError?: Partial<Record<keyof T, string | undefined>>;
@@ -118,4 +124,29 @@ export async function login(
     };
   }
   return redirect("/chat");
+}
+
+export async function logout() {
+  const tokens = cookies().get("tokens");
+
+  if (!tokens) return { formError: "Please login first" };
+
+  const tokensValue = JSON.parse(tokens.value) as Tokens;
+  const refreshToken = tokensValue.refresh.token;
+
+  try {
+    await fetch(`${process.env.API_URL}/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+  } catch (error) {
+    return console.log(error);
+  }
+
+  cookies().delete("tokens");
+  cookies().delete("user");
+  return redirect("/");
 }
