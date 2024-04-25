@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { type SingupInput, signupSchema } from "../validators/auth";
 import { redirect } from "next/navigation";
-import { type UserCreatedResponse } from "@/types";
+import { type RegisterResponse } from "@/types";
 
 export interface ActionResponse<T> {
   fieldError?: Partial<Record<keyof T, string | undefined>>;
@@ -44,7 +44,7 @@ export async function signup(
       };
     }
 
-    const data = (await response.json()) as UserCreatedResponse;
+    const data = (await response.json()) as RegisterResponse;
 
     cookies().set("tokens", JSON.stringify(data.tokens), {
       httpOnly: process.env.NODE_ENV === "production",

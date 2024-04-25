@@ -36,3 +36,25 @@ export interface UserCreatedResponse {
     };
   };
 }
+
+export interface RegisterResponse {
+  userCreated: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    createdAt: string;
+    updateAt: string;
+    isEmailVerified: boolean;
+  };
+  tokens: {
+    access: {
+      token: string;
+      expires: string;
+    };
+    refresh: {
+      token: string;
+      expires: string;
+    };
+  };
+}
