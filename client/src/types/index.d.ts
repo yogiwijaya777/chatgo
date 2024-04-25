@@ -37,7 +37,7 @@ export interface UserCreatedResponse {
   };
 }
 
-export interface RegisterResponse {
+export interface AuthResponse {
   userCreated: {
     id: string;
     name: string;
