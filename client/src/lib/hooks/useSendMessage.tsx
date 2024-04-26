@@ -1,10 +1,10 @@
 "use client";
 
+import { type SendMessagesApiResponse } from "@/types";
 import { useState } from "react";
-import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 import { isLoggedIn } from "../auth/isLoggedIn";
-import { type MessagesApiResponse } from "@/types";
+import useConversation from "../zustand/useConversation";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
@@ -24,11 +24,11 @@ const useSendMessage = () => {
         body: JSON.stringify({ content: message, senderId, receiverId }),
       });
 
-      if (res.status !== 200) {
+      if (res.status !== 201) {
         throw new Error("Something went wrong");
       }
 
-      const data = (await res.json()) as MessagesApiResponse;
+      const data = (await res.json()) as SendMessagesApiResponse;
 
       setMessages([...messages, data.data]);
     } catch (error: unknown) {

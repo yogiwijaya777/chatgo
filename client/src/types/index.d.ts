@@ -116,8 +116,14 @@ export type Message = {
   updatedAt: string;
 };
 
-export type MessagesApiResponse = {
+export type SendMessagesApiResponse = {
   status: number;
   message: string;
   data: Message;
+};
+
+export type GetMessagesApiResponse = {
+  status: number;
+  message: string;
+  data: Message[];
 };
