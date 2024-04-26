@@ -1,26 +1,7 @@
-const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 const prisma = require('../prisma/client');
-const http = require('http');
-const { Server } = require('socket.io');
-
-const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-  },
-});
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
+const server = require('./app');
 
 if (prisma) {
   logger.info('Connected to Database');

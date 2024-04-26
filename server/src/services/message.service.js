@@ -1,10 +1,11 @@
 const httpStatus = require('http-status');
 const prisma = require('../../prisma/client');
 const ApiError = require('../utils/ApiError');
+const { getReceiverSocketId, io } = require('../socket');
 
 const createMessage = async (body) => {
   // Check if room is exist
-  const room = await prisma.room.findFirst({
+  let room = await prisma.room.findFirst({
     where: {
       messages: {
         some: {
@@ -40,22 +41,12 @@ const createMessage = async (body) => {
   });
 
   if (!room) {
-    const newRoom = await prisma.room.create({
-      data: {
-        messages: {
-          create: {
-            senderId: body.senderId,
-            receiverId: body.receiverId,
-            content: body.content,
-          },
-        },
-      },
-    });
+    room = await prisma.room.create({ data: {} });
 
-    return newRoom;
+    console.log(room);
   }
 
-  return prisma.message.create({
+  const newMessage = await prisma.message.create({
     data: {
       content: body.content,
       senderId: body.senderId,
@@ -63,6 +54,13 @@ const createMessage = async (body) => {
       roomId: room.id,
     },
   });
+
+  const receiverSocketId = getReceiverSocketId(newMessage.receiverId);
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit('newMessage', newMessage);
+  }
+
+  return newMessage;
 };
 
 const getMessages = async (senderId, receiverId) => {
@@ -86,7 +84,7 @@ const getMessages = async (senderId, receiverId) => {
   });
 
   if (!room) {
-    return null;
+    return [];
   }
 
   const messages = await prisma.message.findMany({

@@ -8,6 +8,8 @@ import NoChatSelected from "./NoChatSelected";
 import { type AuthResponse } from "@/types";
 import Messages from "./Messages";
 
+export const dynamic = "force-dynamic";
+
 const MessageContainer = ({ authUser }: { authUser: AuthResponse }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
@@ -22,7 +24,7 @@ const MessageContainer = ({ authUser }: { authUser: AuthResponse }) => {
         <NoChatSelected />
       ) : (
         <>
-          <MessageAvatar />
+          <MessageAvatar authUser={authUser} />
           <Messages authUser={authUser} />
           <MessageInput authUser={authUser} />
         </>
