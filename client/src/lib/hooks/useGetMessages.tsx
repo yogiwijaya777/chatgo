@@ -2,28 +2,29 @@
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { isLoggedIn } from "../auth/isLoggedIn";
 import useConversation from "../zustand/useConversation";
-import { type Message, type GetMessagesApiResponse } from "@/types";
+import { type GetMessagesApiResponse, type AuthResponse } from "@/types";
 
-const useGetMessages = () => {
+const useGetMessages = (authUser: AuthResponse) => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
-  const authUser = isLoggedIn();
-  const senderId = authUser?.user.id;
+  const senderId = authUser.user.id;
   const receiverId = selectedConversation?.id;
 
-  useEffect(async (): Promise<{ messages: Message[]; loading: boolean }> => {
+  useEffect(() => {
     const getMessages = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${process.env.API_URL}/messages/${senderId}/${receiverId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authUser?.tokens.access.token}`,
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/messages/${senderId}/${receiverId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authUser?.tokens.access.token}`,
+            },
           },
-        });
+        );
 
         if (res.status !== 200) {
           throw new Error("Error fetching messages");
@@ -38,7 +39,7 @@ const useGetMessages = () => {
       }
     };
 
-    if (selectedConversation?.id) await getMessages();
+    if (selectedConversation?.id) getMessages();
   }, [selectedConversation?.id, setMessages]);
 
   return { messages, loading };

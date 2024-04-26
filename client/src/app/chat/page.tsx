@@ -4,15 +4,15 @@ import { isLoggedIn } from "@/lib/auth/isLoggedIn";
 import { redirect } from "next/navigation";
 
 export default function Chat() {
-  const auth = isLoggedIn();
+  const authUser = isLoggedIn();
 
-  if (!auth) {
+  if (!authUser) {
     return redirect("auth/login");
   }
   return (
     <div className="flex h-screen w-full">
       <SideBar />
-      <MessageContainer />
+      <MessageContainer authUser={authUser} />
     </div>
   );
 }

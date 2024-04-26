@@ -1,18 +1,41 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import useSendMessage from "@/lib/hooks/useSendMessage";
+import { type AuthResponse } from "@/types";
 
-const MessageInput = () => {
+const MessageInput = ({ authUser }: { authUser: AuthResponse }) => {
+  const [message, setMessage] = useState("");
+  const { loading, sendMessage } = useSendMessage(authUser);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!message) return;
+    await sendMessage(message);
+    setMessage("");
+  };
   return (
-    <div className="flex h-14 items-center border-t border-gray-200 bg-gray-100 px-4 dark:border-gray-700 dark:bg-gray-800">
+    <form
+      className="flex h-14 items-center border-t border-gray-200 bg-gray-100 px-4 dark:border-gray-700 dark:bg-gray-800"
+      onSubmit={handleSubmit}
+    >
       <Input
         className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-950"
         placeholder="Type your message..."
         type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       />
-      <Button className="ml-2">
-        <SendIcon className="h-5 w-5" />
+      <Button type="submit" className="ml-2">
+        {loading ? (
+          <div className="loading loading-spinner"></div>
+        ) : (
+          <SendIcon className="h-5 w-5" />
+        )}
       </Button>
-    </div>
+    </form>
   );
 };
 

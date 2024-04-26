@@ -6,7 +6,6 @@ import { AvatarGenerator } from "random-avatar-generator";
 
 const Conversation = ({ conversation }: { conversation: User }) => {
   const generator = new AvatarGenerator();
-
   const { setSelectedConversation } = useConversation();
 
   return (

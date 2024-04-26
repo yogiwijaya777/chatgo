@@ -3,13 +3,18 @@ interface Conversation {
 }
 
 interface Message {
-  id: string;
-  text: string;
+  id: text;
+  content: string;
+  senderId: string;
+  receiverId: string;
+  roomId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ConversationState {
-  selectedConversation: Conversation | null;
-  setSelectedConversation: (selectedConversation: Conversation | null) => void;
+  selectedConversation: User | null;
+  setSelectedConversation: (selectedConversation: User | null) => void;
   messages: Message[];
   setMessages: (messages: Message[]) => void;
 }

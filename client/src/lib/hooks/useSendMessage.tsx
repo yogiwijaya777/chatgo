@@ -1,25 +1,23 @@
 "use client";
 
-import { type SendMessagesApiResponse } from "@/types";
+import { type AuthResponse, type SendMessagesApiResponse } from "@/types";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { isLoggedIn } from "../auth/isLoggedIn";
 import useConversation from "../zustand/useConversation";
 
-const useSendMessage = () => {
+const useSendMessage = (authUser: AuthResponse) => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
-  const authUser = isLoggedIn();
   const senderId = authUser?.user.id;
   const receiverId = selectedConversation?.id;
-
   const sendMessage = async (message: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.API_URL}/messages`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authUser?.tokens.access.token}`,
         },
         body: JSON.stringify({ content: message, senderId, receiverId }),
       });

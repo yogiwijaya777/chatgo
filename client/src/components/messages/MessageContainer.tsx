@@ -1,13 +1,14 @@
 "use client";
 
 import useConversation from "@/lib/zustand/useConversation";
-import Message from "./Message";
 import MessageAvatar from "./MessageAvatar";
 import MessageInput from "./MessageInput";
 import { useEffect } from "react";
 import NoChatSelected from "./NoChatSelected";
+import { type AuthResponse } from "@/types";
+import Messages from "./Messages";
 
-const MessageContainer = () => {
+const MessageContainer = ({ authUser }: { authUser: AuthResponse }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   useEffect(() => {
@@ -22,8 +23,8 @@ const MessageContainer = () => {
       ) : (
         <>
           <MessageAvatar />
-          <Message />
-          <MessageInput />
+          <Messages authUser={authUser} />
+          <MessageInput authUser={authUser} />
         </>
       )}
     </div>
