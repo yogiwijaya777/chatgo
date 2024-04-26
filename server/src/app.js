@@ -12,8 +12,7 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
-
-const app = express();
+const { app, server } = require('./socket');
 
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
@@ -62,4 +61,4 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-module.exports = app;
+module.exports = server;

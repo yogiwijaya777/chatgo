@@ -1,13 +1,11 @@
-const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 const prisma = require('../prisma/client');
-
-let server;
+const server = require('./app');
 
 if (prisma) {
   logger.info('Connected to Database');
-  server = app.listen(config.port, () => {
+  server.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
     console.log(`Docs📚: http://localhost:${config.port}/v1/docs`);
   });
