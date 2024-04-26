@@ -19,7 +19,7 @@ const defaultRoutes = [
     route: userRoute,
   },
   {
-    path: '/message',
+    path: '/messages',
     route: messageRoute,
   },
   {
