@@ -105,3 +105,19 @@ interface UsersApiResponse {
   message: string;
   data: User[];
 }
+
+export type Message = {
+  id: text;
+  content: string;
+  senderId: string;
+  receiverId: string;
+  roomId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type MessagesApiResponse = {
+  status: number;
+  message: string;
+  data: Message;
+};
