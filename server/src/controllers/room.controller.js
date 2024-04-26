@@ -13,7 +13,6 @@ const createRoom = catchAsync(async (req, res) => {
 });
 
 const getRooms = catchAsync(async (req, res) => {
-  const filter = { name: req.query.name };
   const options = {
     take: req.query.take || 10,
     page: req.query.page || 1,
@@ -28,7 +27,7 @@ const getRooms = catchAsync(async (req, res) => {
   if (sort === 'a-z') options.sort = { name: 'asc' };
   if (sort === 'z-a') options.sort = { name: 'desc' };
 
-  const result = await roomService.getRooms(filter, options);
+  const result = await roomService.getRooms(options);
 
   res.status(httpStatus.OK).send({
     status: httpStatus.OK,

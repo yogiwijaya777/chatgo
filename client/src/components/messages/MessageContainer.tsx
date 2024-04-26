@@ -1,13 +1,14 @@
 "use client";
 
-import useConversation from "@/zustand/useConversation";
-import Message from "./Message";
+import useConversation from "@/lib/zustand/useConversation";
 import MessageAvatar from "./MessageAvatar";
 import MessageInput from "./MessageInput";
 import { useEffect } from "react";
 import NoChatSelected from "./NoChatSelected";
+import { type AuthResponse } from "@/types";
+import Messages from "./Messages";
 
-const MessageContainer = () => {
+const MessageContainer = ({ authUser }: { authUser: AuthResponse }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   useEffect(() => {
@@ -18,16 +19,12 @@ const MessageContainer = () => {
   return (
     <div className="flex flex-1 flex-col">
       {!selectedConversation ? (
-        <>
-          <MessageAvatar />
-          <Message />
-          <MessageInput />
-        </>
+        <NoChatSelected />
       ) : (
         <>
           <MessageAvatar />
-          <Message />
-          <MessageInput />
+          <Messages authUser={authUser} />
+          <MessageInput authUser={authUser} />
         </>
       )}
     </div>

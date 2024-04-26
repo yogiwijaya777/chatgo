@@ -6,10 +6,7 @@ const auth = require('../../middlewares/auth');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .post(auth(), validate(roomValidation.createRoom), roomController.createRoom)
-  .get(auth('getRooms'), roomController.getRooms);
+router.route('/').post(auth(), roomController.createRoom).get(auth('getRooms'), roomController.getRooms);
 
 router
   .route('/:roomId')

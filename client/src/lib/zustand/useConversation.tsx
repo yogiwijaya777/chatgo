@@ -1,3 +1,5 @@
+"use client";
+
 import { type ConversationState } from "@/types";
 import { create } from "zustand";
 

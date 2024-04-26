@@ -19,13 +19,13 @@ const defaultRoutes = [
     route: userRoute,
   },
   {
-    path: '/message',
-    route: messageRoute
+    path: '/messages',
+    route: messageRoute,
   },
+  {
     path: '/rooms',
     route: roomRoute,
   },
-
 ];
 
 const devRoutes = [
