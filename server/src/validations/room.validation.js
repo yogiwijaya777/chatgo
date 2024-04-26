@@ -27,7 +27,6 @@ const deleteRoom = {
 };
 
 module.exports = {
-  createRoom,
   getRoom,
   updateRoom,
   deleteRoom,
