@@ -16,8 +16,8 @@ model User {
   email           String?   @unique
   password        String
   role            String    @default("user")
-  createdAt       DateTime  @default(now())
-  updateAt        DateTime  @default(now())
+  createdAt DateTime @default(now())
+  updateAt  DateTime  @updatedAt
   isEmailVerified Boolean   @default(false)
   tokens          Token[]
   roomsAsUser1    Room[]    @relation("user1Relation")
@@ -34,13 +34,13 @@ model Token {
   expires     DateTime
   blacklisted Boolean  @default(false)
   createdAt   DateTime @default(now())
-  updateAt    DateTime @default(now())
+  updateAt  DateTime  @updatedAt
 }
 
 model Room {
   id        String    @id @default(uuid())
   name      String
-  createdAt DateTime  @default(now())
+  updateAt  DateTime @updatedAt
   userId    String
   userId2   String
   user1     User      @relation("user1Relation", fields: [userId], references: [id], onDelete: Cascade)
@@ -52,7 +52,7 @@ model Message {
   id        String   @id @default(uuid())
   text      String
   createdAt DateTime @default(now())
-  updateAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
   userId    String
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   roomId    String
