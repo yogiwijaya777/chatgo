@@ -8,14 +8,32 @@ const createMessage = async (body) => {
     where: {
       messages: {
         some: {
-          senderId: body.senderId,
+          OR: [
+            {
+              senderId: body.senderId,
+              receiverId: body.receiverId,
+            },
+            {
+              senderId: body.receiverId,
+              receiverId: body.senderId,
+            },
+          ],
         },
       },
     },
     include: {
       messages: {
         where: {
-          senderId: body.senderId,
+          OR: [
+            {
+              senderId: body.senderId,
+              receiverId: body.receiverId,
+            },
+            {
+              senderId: body.receiverId,
+              receiverId: body.senderId,
+            },
+          ],
         },
       },
     },
