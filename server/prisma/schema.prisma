@@ -11,18 +11,17 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  name            String
-  email           String?   @unique
-  password        String
-  role            String    @default("user")
-  createdAt DateTime @default(now())
-  updateAt  DateTime  @updatedAt
-  isEmailVerified Boolean   @default(false)
-  tokens          Token[]
-  roomsAsUser1    Room[]    @relation("user1Relation")
-  roomsAsUser2    Room[]    @relation("user2Relation")
-  messages        Message[]
+  id                String    @id @default(uuid())
+  name              String
+  email             String?   @unique
+  password          String
+  role              String    @default("user")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  isEmailVerified   Boolean   @default(false)
+  tokens            Token[]
+  messageAsSender   Message[] @relation("sender")
+  messageAsReceiver Message[] @relation("receiver")
 }
 
 model Token {
@@ -38,22 +37,21 @@ model Token {
 }
 
 model Room {
-  id        String    @id @default(uuid())
-  updateAt  DateTime @updatedAt
-  userId    String
-  userId2   String
-  user1     User      @relation("user1Relation", fields: [userId], references: [id], onDelete: Cascade)
-  user2     User      @relation("user2Relation", fields: [userId2], references: [id], onDelete: Cascade)
+  id        String     @id @default(uuid())
   messages  Message[]
+  updatedAt DateTime   @updatedAt
+  createdAt DateTime   @default(now())
 }
 
 model Message {
   id        String   @id @default(uuid())
-  text      String
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
-  userId    String
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String
+  sender    User     @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId  String
+  receiver  User     @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId    String
-  Room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
