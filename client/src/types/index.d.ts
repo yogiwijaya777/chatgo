@@ -79,3 +79,29 @@ export interface Tokens {
     expires: string;
   };
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updateAt: string;
+  isEmailVerified: boolean;
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updateAt: string;
+  isEmailVerified: boolean;
+}
+
+interface UsersApiResponse {
+  status: number;
+  message: string;
+  data: User[];
+}

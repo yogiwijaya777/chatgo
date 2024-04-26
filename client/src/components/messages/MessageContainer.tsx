@@ -1,6 +1,6 @@
 "use client";
 
-import useConversation from "@/zustand/useConversation";
+import useConversation from "@/lib/zustand/useConversation";
 import Message from "./Message";
 import MessageAvatar from "./MessageAvatar";
 import MessageInput from "./MessageInput";
