@@ -16,6 +16,10 @@ const createUser = catchAsync(async (req, res) => {
 const getUsers = catchAsync(async (req, res) => {
   const result = await userService.queryUsers();
 
+  for (const user of result.data) {
+    delete user.password;
+  }
+
   res.status(httpStatus.OK).send({
     status: httpStatus.OK,
     message: 'Get Users Success',
