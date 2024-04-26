@@ -12,19 +12,9 @@ const createMessage = catchAsync(async (req, res) => {
   });
 });
 
-const getMessage = catchAsync(async (req, res) => {
-  const { text, skip, take, sort, page } = req.query;
-  const filter = {
-    text: text,
-  };
-  const options = {
-    skip: Number(skip) || 0,
-    take: Number(take) || 5,
-    page: Number(page) || 1,
-    sort: sort == 'lastest' ? { createdAt: 'desc' } : { createdAt: 'asc' },
-  };
-
-  const message = await messageService.getMessage(filter, options);
+const getMessages = catchAsync(async (req, res) => {
+  const { senderId, receiverId } = req.params;
+  const message = await messageService.getMessages(senderId, receiverId);
 
   res.status(httpStatus.OK).send({
     status: httpStatus.OK,
@@ -70,7 +60,7 @@ const deleteMessage = catchAsync(async (req, res) => {
 
 module.exports = {
   createMessage,
-  getMessage,
+  getMessages,
   getMessageById,
   updateMessage,
   deleteMessage,

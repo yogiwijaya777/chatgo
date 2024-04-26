@@ -8,14 +8,14 @@ const createMessage = async (body) => {
     where: {
       messages: {
         some: {
-          senderId: body.senderId, // ID pengguna yang ingin Anda cocokkan
+          senderId: body.senderId,
         },
       },
     },
     include: {
       messages: {
         where: {
-          senderId: body.senderId, // ID pengguna yang ingin Anda cocokkan
+          senderId: body.senderId,
         },
       },
     },
@@ -47,8 +47,40 @@ const createMessage = async (body) => {
   });
 };
 
-const getMessage = async (filter, option) => {
-  return prisma.message.findMany();
+const getMessages = async (senderId, receiverId) => {
+  const room = await prisma.room.findFirst({
+    where: {
+      messages: {
+        some: {
+          OR: [
+            {
+              senderId: senderId,
+              receiverId: receiverId,
+            },
+            {
+              senderId: receiverId,
+              receiverId: senderId,
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  if (!room) {
+    return null;
+  }
+
+  const messages = await prisma.message.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+    where: {
+      roomId: room.id,
+    },
+  });
+
+  return messages;
 };
 
 const getMessageById = async (id) => {
@@ -82,7 +114,7 @@ const deleteMessage = async (id) => {
 
 module.exports = {
   createMessage,
-  getMessage,
+  getMessages,
   getMessageById,
   updateMessage,
   deleteMessage,
