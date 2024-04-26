@@ -16,7 +16,7 @@ const createUser = catchAsync(async (req, res) => {
 const getUsers = catchAsync(async (req, res) => {
   const result = await userService.queryUsers();
 
-  for (const user of result.data) {
+  for (const user of result) {
     delete user.password;
   }
 
