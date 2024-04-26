@@ -20,16 +20,10 @@ const createRoom = async (room) => {
  * @returns {Promise<Room[]>}
  */
 const getRooms = async () => {
-  const { name } = filter;
   const { take, skip, sort: orderBy } = options;
 
   const rooms = await prisma.room.findMany({
-    where: {
-      name: {
-        contains: name,
-      },
-    },
-    include: { products: true },
+    include: { messages: true },
     orderBy,
     take: Number(take),
     skip,

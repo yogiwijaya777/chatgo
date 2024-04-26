@@ -39,7 +39,6 @@ model Token {
 
 model Room {
   id        String    @id @default(uuid())
-  name      String
   updateAt  DateTime @updatedAt
   userId    String
   userId2   String
