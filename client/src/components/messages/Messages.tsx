@@ -1,10 +1,15 @@
 "use client";
 
 import useGetMessages from "@/lib/hooks/useGetMessages";
+import useListenMessages from "@/lib/hooks/useListenMessages";
 import { type AuthResponse } from "@/types";
+
+export const dynamic = "force-dynamic";
 
 const Messages = ({ authUser }: { authUser: AuthResponse }) => {
   const { messages, loading } = useGetMessages(authUser);
+  useListenMessages();
+
   return (
     <div className="flex-1 overflow-y-auto p-4">
       <div className="grid gap-4">

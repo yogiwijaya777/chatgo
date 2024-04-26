@@ -5,7 +5,7 @@ services:
     image: postgres
     restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data2:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=inirahasia
     networks:
@@ -37,4 +37,4 @@ networks:
   cg-network:
   next-express:
 volumes:
-  db-data:
+  db-data2:
